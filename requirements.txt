@@ -1,0 +1,6 @@
+# Runtime deps (scaffold runs without them, except where noted)
+typesafe-sdk>=0.7.0   # official Jev SDK; only needed for JevJudge (real API)
+pyyaml>=6.0           # config/default.yaml
+
+# Dev
+pytest>=7.0
