@@ -1,0 +1,18 @@
+# Frozen cascade policy. Fit tau on a SELECTION set, then freeze it here.
+# Never refit on the test set. Thresholds do not transfer across tasks.
+
+first_pass:
+  provider: typesafe          # typesafe | cloudflare | vercel | mock
+  model: "jev-1.13.0"        # PINNED. Do not use the jev-latest alias for a
+                             # frozen policy: the alias moves on release and
+                             # silently invalidates tau.
+  price_per_mtok_usd: 0.042  # input tokens; output tokens are free
+
+fallback:
+  provider: openai            # your strongest judge; wire up in judges.py
+  model: "gpt-6-astra"        # placeholder: use the strongest judge you trust
+  price_per_mtok_usd: 10.0   # placeholder: fill in your fallback's price
+
+policy:
+  tau: 0.9                   # accept Jev's verdict when q >= tau, else escalate
+  target_retention: 0.99     # fit_tau target: retain 99% of fallback accuracy
